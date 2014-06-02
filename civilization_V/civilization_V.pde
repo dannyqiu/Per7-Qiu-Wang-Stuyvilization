@@ -1,10 +1,11 @@
-void setup() {
- int w = 1280;
- int h = 720;
- size(w,h);
- Object[][] map = new Object[w][h];
+Map game;
+
+public void setup() {
+  size(MAP_WIDTH, MAP_HEIGHT);
+  game = new Map();
 }
 
-void draw() {
-  
+public void draw() {
+  game.draw();
 }
+
