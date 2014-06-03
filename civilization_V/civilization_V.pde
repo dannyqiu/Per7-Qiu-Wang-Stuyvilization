@@ -1,5 +1,6 @@
 Map game;
 
+
 public void setup() {
   size(MAP_WIDTH, MAP_HEIGHT);
   game = new Map();

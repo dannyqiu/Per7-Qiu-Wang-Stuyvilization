@@ -3,6 +3,12 @@ class Tile {
   int centerX;
   int centerY;
   
+  protected int value = 5;
+  
+  public int getValue(){
+    return value;
+  }
+  
   public Tile (float x, float y) {
     centerX = round(x * TILE_SIZE * 2);
     centerY = round(y * TILE_SIZE * 2);
