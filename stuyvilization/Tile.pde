@@ -43,7 +43,7 @@ class Tile {
     vertex(centerX - offsetX, centerY - offsetY);
     vertex(centerX - offsetX, centerY + offsetY);
     endShape(CLOSE);
-    fill(0, 0, 0);
-    text(centerX+","+centerY, centerX, centerY);
+    //fill(0, 0, 0);
+    //text(centerX+","+centerY, centerX, centerY);
   }
 }

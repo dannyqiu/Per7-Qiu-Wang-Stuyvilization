@@ -1,8 +1,8 @@
 abstract class Unit {
 
   //Stats
-  protected int _health, _strength, _defense, _speed, _range, _cost; 
-  protected String _name, _status; // (CanMove,Moved,Dead,Defending,Capturing)
+  int _health, _strength, _defense, _speed, _range, _cost, _movement;
+  String _name, _status; // (CanMove,Moved,Dead,Defending,Capturing)
 
   //Accessors
   int getHealth() {
