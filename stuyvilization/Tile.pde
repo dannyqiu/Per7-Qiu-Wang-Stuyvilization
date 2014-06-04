@@ -6,7 +6,7 @@ class Tile {
   color tileColor;
   ArrayList<Tile> neighbors;
   int value;
-  
+
   public Tile(float x, float y) {
     centerX = round(x * TILE_SIZE * 2);
     centerY = round(y * TILE_SIZE * 2);
@@ -17,16 +17,16 @@ class Tile {
   void setPointer(Object item) {
     this.item = item;
   }
-  
+
   void setNeighbors(ArrayList<Tile> neighbors) {
     this.neighbors = neighbors;
   }
-  
+
   ArrayList<Tile> getNeighbors() {
     return neighbors;
   }
 
-  int getValue(){
+  int getValue() {
     return value;
   }
 

@@ -1,6 +1,5 @@
 Map game;
 
-
 public void setup() {
   size(MAP_WIDTH, MAP_HEIGHT);
   game = new Map();
@@ -16,4 +15,3 @@ void mouseClicked() {
   println(mouseX);
   println(mouseY);
 }
-

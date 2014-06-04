@@ -1,5 +1,5 @@
-class Warrior extends Unit{
-  public Warrior(){
+class Warrior extends Unit {
+  public Warrior() {
     _strength = 6;
     _movement = 2;
     _range = 1;
