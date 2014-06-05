@@ -21,9 +21,17 @@ class Tile {
   void setNeighbors(ArrayList<Tile> neighbors) {
     this.neighbors = neighbors;
   }
+  
+  void setColor(color c) {
+    tileColor = c;
+  }
 
   ArrayList<Tile> getNeighbors() {
     return neighbors;
+  }
+  
+  color getColor() {
+    return tileColor;
   }
 
   int getValue() {

@@ -20,10 +20,8 @@ class Map {
       }
     }
     for (int y=0; y<height; y++) {
-      if (y % 2 == 0) {
-        for (int x=0; x<width; x++) {
-          map[x][y].setNeighbors(getTileNeighbors(x, y)); // Defines the neighbors of the tiles after the tiles are all created
-        }
+      for (int x=0; x<width; x++) {
+        map[x][y].setNeighbors(getTileNeighbors(x, y)); // Defines the neighbors of the tiles after the tiles are all created
       }
     }
   }
