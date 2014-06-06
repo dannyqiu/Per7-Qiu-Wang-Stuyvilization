@@ -22,7 +22,7 @@ public class Player {
   }
 
   void BuildUnit(int i) {
-    OwnedUnits.add (Units.get(i));
+    OwnedUnits.add(Units.get(i));
     gold -= Units.get(i).getCost();
   }
 }

@@ -3,20 +3,15 @@ class Tile {
   Object item;
   int centerX;
   int centerY;
-   int value = 5;
-  
- int getValue(){
-    return value;
-  }
-  
-  public Tile (float x, float y) {
-  color tileColor;
   ArrayList<Tile> neighbors;
+  color tileColor;
   int value;
-  centerX = round(x * TILE_SIZE * 2);
-  centerY = round(y * TILE_SIZE * 2);
-  tileColor = #FFDC00;
-  value = 5;
+
+  public Tile (float x, float y) {
+    centerX = round(x * TILE_SIZE * 2);
+    centerY = round(y * TILE_SIZE * 2);
+    tileColor = #FFDC00;
+    value = 5;
   }
 
   void setPointer(Object item) {
@@ -26,7 +21,7 @@ class Tile {
   void setNeighbors(ArrayList<Tile> neighbors) {
     this.neighbors = neighbors;
   }
-  
+
   void setColor(color c) {
     tileColor = c;
   }
@@ -34,7 +29,7 @@ class Tile {
   ArrayList<Tile> getNeighbors() {
     return neighbors;
   }
-  
+
   color getColor() {
     return tileColor;
   }
@@ -60,3 +55,4 @@ class Tile {
     //text(centerX+","+centerY, centerX, centerY);
   }
 }
+
