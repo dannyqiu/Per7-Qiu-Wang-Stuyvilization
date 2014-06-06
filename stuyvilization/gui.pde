@@ -11,6 +11,8 @@ GImageButton Unit8;
 GTextArea History; 
 GTextArea Stats;
 
+synchronized public void draw (GWinApplet appc, GWinData data) { 
+} 
 
 public void EndTurnClick(GButton source, GEvent event) { 
 } 

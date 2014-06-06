@@ -1,3 +1,4 @@
+import g4p_controls.*;
 Map game;
 Generator generator;
 
@@ -7,6 +8,7 @@ public void setup() {
   game = new Map();
   generator = new Generator();
   generator.generateMap(game);
+  createGUI();
 }
 
 public void draw() {
