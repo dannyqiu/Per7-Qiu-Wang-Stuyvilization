@@ -10,7 +10,7 @@ class Tile {
   public Tile (float x, float y) {
     centerX = round(x * TILE_SIZE * 2);
     centerY = round(y * TILE_SIZE * 2);
-    tileColor = #FFDC00;
+    tileColor = LAND_COLOR;
     value = 5;
   }
 
