@@ -97,6 +97,14 @@ class Map {
   Tile[][] getMap() {
     return map;
   }
+  
+  int getWidth() {
+    return width;
+  }
+  
+  int getHeight() {
+    return height;
+  }
 
   Tile getNearestTile(int xCoor, int yCoor) {
     int y = round(yCoor / TILE_SIZE / 2);
