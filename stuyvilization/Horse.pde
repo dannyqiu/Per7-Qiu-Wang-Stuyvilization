@@ -3,7 +3,7 @@ class Horse extends Unit {
     _health = 25;
     _strength = 8;
     _movement = 2;
-    _range = 2;
+    _range = 1;
     _cost = 200;
     _name = "Horseman";
     x = xpos;

@@ -57,14 +57,14 @@ public void EndTurnClick(GButton source, GEvent event) {
 } 
 
 public void Unit1Click(GImageButton source, GEvent event) { 
- Sprite X = new Sprite(this,"Images/scout.png",UnitNumber); 
+ Sprite X = new Sprite(this,"Images/thief.png",UnitNumber); 
  UnitNumber ++;
  X.setXY(35,50);
- Unit Scout = new Scout(40,50);
- Units.add (Scout);
+ Unit Thief = new Thief(40,50);
+ Units.add (Thief);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
- Me.gold -= Scout._cost;
+ Me.gold -= Thief._cost;
 }
 
 public void UnitClick2(GImageButton source, GEvent event) {
@@ -101,9 +101,25 @@ Sprite X = new Sprite(this,"Images/settler.png",UnitNumber);
 } 
 
 public void Unit5Click(GImageButton source, GEvent event) {
+ Sprite X = new Sprite(this,"Images/mage.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Mage = new Mage(40,50);
+ Units.add (Mage);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Mage._cost;
 } 
 
 public void Unit6Click(GImageButton source, GEvent event) {
+ Sprite X = new Sprite(this,"Images/knight.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Knight = new Knight(40,50);
+ Units.add (Knight);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Knight._cost;
 } 
 
 public void Unit7Click(GImageButton source, GEvent event) { 
@@ -118,6 +134,14 @@ public void Unit7Click(GImageButton source, GEvent event) {
 } 
 
 public void Unit8Click(GImageButton source, GEvent event) { 
+ Sprite X = new Sprite(this,"Images/berserker.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Berserker = new Berserker(40,50);
+ Units.add (Berserker);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Berserker._cost;
 } 
 
 public void Record(GTextArea source, GEvent event) { 
@@ -146,13 +170,13 @@ public void createGUI(){
   Unit3.addEventHandler(this, "UnitClick3");
   Unit4 = new GImageButton(window1.papplet, 140, 300, 140, 140, new String[] { "Images/Settler_(Civ5).png", "Images/Settler_(Civ5).png", "Images/Settler_(Civ5).png" } );
   Unit4.addEventHandler(this, "UnitClick4");
-  Unit5 = new GImageButton(window1.papplet, 0, 440, 140, 140, new String[] { "Images/Catapult_(Civ5).png", "Images/Catapult_(Civ5).png", "Images/Catapult_(Civ5).png" } );
+  Unit5 = new GImageButton(window1.papplet, 0, 440, 140, 140, new String[] { "Images/Prophet_(Civ5).png", "Images/Prophet_(Civ5).png", "Images/Prophet_(Civ5).png" } );
   Unit5.addEventHandler(this, "Unit5Click");
   Unit6 = new GImageButton(window1.papplet, 140, 440, 140, 140, new String[] { "Images/Longswordsman_(Civ5).png", "Images/Longswordsman_(Civ5).png", "Images/Longswordsman_(Civ5).png" } );
   Unit6.addEventHandler(this, "Unit6Click");
   Unit7 = new GImageButton(window1.papplet, 0, 580, 140, 140, new String[] { "Images/Knight_(Civ5).png", "Images/Knight_(Civ5).png", "Images/Knight_(Civ5).png" } );
   Unit7.addEventHandler(this, "Unit7Click");
-  Unit8 = new GImageButton(window1.papplet, 140, 580, 140, 140, new String[] { "Images/Rifleman_(Civ5).png", "Images/Rifleman_(Civ5).png", "Images/Rifleman_(Civ5).png" } );
+  Unit8 = new GImageButton(window1.papplet, 140, 580, 140, 140, new String[] { "Images/Berserker_(Civ5).png", "Images/Berserker_(Civ5).png", "Images/Berserker_(Civ5).png" } );
   Unit8.addEventHandler(this, "Unit8Click");
   Stats = new GTextArea (window1.papplet, 80, 0, 200, 25, G4P.SCROLLBARS_NONE);
   Stats.setTextEditEnabled(false);
