@@ -12,6 +12,8 @@ GTextArea History;
 GTextArea Stats;
 
 GImageButton Start; 
+Player Me;
+int UnitNumber = 0;
 synchronized public void draw (GWinApplet appc, GWinData data) { 
 } 
 
@@ -20,30 +22,82 @@ synchronized public void draw (GWinApplet appc, GWinData data) {
     int mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
     Tile start = map.getMap()[mapX][mapY];
     while (hex (start.getColor ()).equals(hex(WATER_COLOR))){
-    mapX = MAP_WIDTH / (TILE_SIZE * 4);
-    mapY = MAP_HEIGHT / (TILE_SIZE * 2);
+    mapX = (int) random(MAP_WIDTH / (TILE_SIZE * 2));
+    mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
     start = map.getMap()[mapX][mapY];}
-    Sprite Settler = new Sprite(this,"Images/settler.png",0);
-    Settler.setXY(start.getCenterX(),start.getCenterY());
-    Settler.draw();
+    Unit Settler = new Settler(mapX,mapY);
+    Units.add(Settler);
+    Sprite X = new Sprite(this,"Images/settler.png",UnitNumber);
+    UnitNumber ++;
+    X.setXY(start.getCenterX(),start.getCenterY());
+    X.respondToMouse(true);
+    X.addEventHandler(this,"movement");
   }
+  
+  
+void movement(Sprite sprite) {
+  Unit Selected = Units.get(sprite.getZorder());
+  if(sprite.eventType == Sprite.PRESS){
+    Selected.capture(game);
+}
+  else if(sprite.eventType == Sprite.RELEASE){
+    if (Selected._movement > 0){
+    sprite.setXY(mouseX,mouseY);
+    Selected._movement --;}
+    }
+   }
+
   
 public void StartClick(GImageButton source, GEvent event) { 
 }
 
 public void EndTurnClick(GButton source, GEvent event) { 
+  for (Unit x: Units){
+    x._movement = 2;}
 } 
 
-public void Unit1Click(GImageButton source, GEvent event) {  
+public void Unit1Click(GImageButton source, GEvent event) { 
+ Sprite X = new Sprite(this,"Images/scout.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Scout = new Scout(40,50);
+ Units.add (Scout);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Scout._cost;
 }
 
 public void UnitClick2(GImageButton source, GEvent event) {
+ Sprite X = new Sprite(this,"Images/warrior.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Warrior = new Warrior(40,50);
+ Units.add (Warrior);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Warrior._cost;
 } 
 
-public void Unit3Click(GImageButton source, GEvent event) { 
+public void UnitClick3(GImageButton source, GEvent event) { 
+ Sprite X = new Sprite(this,"Images/archer.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Archer = new Archer(40,50);
+ Units.add (Archer);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Archer._cost;
 }
 
-public void UnitCick4(GImageButton source, GEvent event) { 
+public void UnitClick4(GImageButton source, GEvent event) { 
+Sprite X = new Sprite(this,"Images/settler.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Settler = new Settler(40,50);
+ Units.add (Settler);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Settler._cost;
 } 
 
 public void Unit5Click(GImageButton source, GEvent event) {
@@ -53,6 +107,14 @@ public void Unit6Click(GImageButton source, GEvent event) {
 } 
 
 public void Unit7Click(GImageButton source, GEvent event) { 
+ Sprite X = new Sprite(this,"Images/horse.png",UnitNumber); 
+ UnitNumber ++;
+ X.setXY(35,50);
+ Unit Horse = new Horse(40,50);
+ Units.add (Horse);
+ X.respondToMouse(true);
+ X.addEventHandler(this,"movement");
+ Me.gold -= Horse._cost;
 } 
 
 public void Unit8Click(GImageButton source, GEvent event) { 
@@ -81,9 +143,9 @@ public void createGUI(){
   Unit2 = new GImageButton(window1.papplet, 140, 160, 140, 140, new String[] { "Images/Warrior_(Civ5).png", "Images/Warrior_(Civ5).png", "Images/Warrior_(Civ5).png" } );
   Unit2.addEventHandler(this, "UnitClick2");
   Unit3 = new GImageButton(window1.papplet, 0, 300, 140, 140, new String[] { "Images/Archer_(Civ5).png", "Images/Archer_(Civ5).png", "Images/Archer_(Civ5).png" } );
-  Unit3.addEventHandler(this, "Unit3Click");
+  Unit3.addEventHandler(this, "UnitClick3");
   Unit4 = new GImageButton(window1.papplet, 140, 300, 140, 140, new String[] { "Images/Settler_(Civ5).png", "Images/Settler_(Civ5).png", "Images/Settler_(Civ5).png" } );
-  Unit4.addEventHandler(this, "UnitCick4");
+  Unit4.addEventHandler(this, "UnitClick4");
   Unit5 = new GImageButton(window1.papplet, 0, 440, 140, 140, new String[] { "Images/Catapult_(Civ5).png", "Images/Catapult_(Civ5).png", "Images/Catapult_(Civ5).png" } );
   Unit5.addEventHandler(this, "Unit5Click");
   Unit6 = new GImageButton(window1.papplet, 140, 440, 140, 140, new String[] { "Images/Longswordsman_(Civ5).png", "Images/Longswordsman_(Civ5).png", "Images/Longswordsman_(Civ5).png" } );
@@ -94,7 +156,6 @@ public void createGUI(){
   Unit8.addEventHandler(this, "Unit8Click");
   Stats = new GTextArea (window1.papplet, 80, 0, 200, 25, G4P.SCROLLBARS_NONE);
   Stats.setTextEditEnabled(false);
-  Stats.setDefaultText ("Gold : 0");
   History = new GTextArea(window1.papplet, 80, 20, 200, 140, G4P.SCROLLBARS_NONE);
   History.setTextEditEnabled(false);
   History.setDefaultText ("Welcome");

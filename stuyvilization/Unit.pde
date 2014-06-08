@@ -1,7 +1,7 @@
 abstract class Unit {
 
   //Stats
-  int _health, _strength, _defense, _speed, _range, _cost, _movement;
+  int _health, _strength, _range, _cost, _movement,x,y;
   String _name, _status; // (CanMove,Moved,Dead,Defending,Capturing)
 
   //Accessors
@@ -11,14 +11,6 @@ abstract class Unit {
 
   int getStrength() {
     return _strength;
-  }
-
-  int getDefense() {
-    return _defense;
-  }
-
-  int getSpeed() {
-    return _speed;
   }
 
   int getRange() {
@@ -37,15 +29,23 @@ abstract class Unit {
     return _status;
   }
 
+  void setX(int xpos) {
+    x = xpos;
+  }  
+  void setY(int ypos) {
+    y = ypos;
+  }  
   //Methods
-  void move() {
-  }
+  void move(Map map) {
+     x = mouseX;
+     y = mouseY;
+     capture(map);
+   }  
   void attack(Unit target) {
+    target._health -= this.getStrength();
   }
-  void garrison() {
-  }
-  void capture() {
-  }
-  void die() {
+  void capture(Map map) {
+    Tile current = map.getMap()[x][y];
+    current.setColor(MYTILE_COLOR);
   }
 }

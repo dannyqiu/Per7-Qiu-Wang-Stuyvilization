@@ -12,6 +12,9 @@ public class Player {
     OwnedTiles = new ArrayList<Tile>();
   }
 
+  int getGold(){
+    return gold;}
+    
   void newTurn() {
     for (Resource x : OwnedResources) {
       gold += x.getValue();
@@ -21,8 +24,4 @@ public class Player {
     }
   }
 
-  void BuildUnit(int i) {
-    OwnedUnits.add(Units.get(i));
-    gold -= Units.get(i).getCost();
-  }
 }
