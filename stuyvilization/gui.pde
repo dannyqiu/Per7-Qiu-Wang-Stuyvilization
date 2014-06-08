@@ -25,6 +25,7 @@ synchronized public void draw (GWinApplet appc, GWinData data) {
     mapX = (int) random(MAP_WIDTH / (TILE_SIZE * 2));
     mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
     start = map.getMap()[mapX][mapY];}
+    start.setColor(MYTILE_COLOR);
     Unit Settler = new Settler(mapX,mapY);
     Units.add(Settler);
     Sprite X = new Sprite(this,"Images/settler.png",UnitNumber);
@@ -38,11 +39,12 @@ synchronized public void draw (GWinApplet appc, GWinData data) {
 void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
   if(sprite.eventType == Sprite.PRESS){
-    Selected.capture(game);
 }
   else if(sprite.eventType == Sprite.RELEASE){
     if (Selected._movement > 0){
-    sprite.setXY(mouseX,mouseY);
+    Tile start = game.getNearestTile(mouseX,mouseY);
+    sprite.setXY(start.getCenterX(),start.getCenterY());
+    start.setColor(MYTILE_COLOR);
     Selected._movement --;}
     }
    }
