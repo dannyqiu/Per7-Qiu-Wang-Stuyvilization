@@ -1,3 +1,7 @@
+import sprites.utils.*;
+import sprites.maths.*;
+import sprites.*;
+
 import g4p_controls.*;
 Map game;
 Generator generator;

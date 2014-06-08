@@ -1,3 +1,4 @@
+
 class Scout extends Unit {
   public Scout() {
     _strength = 4;
@@ -5,5 +6,5 @@ class Scout extends Unit {
     _range = 1;
     _cost = 20;
     _name = "Scout";
-  }
+  } 
 }

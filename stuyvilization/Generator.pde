@@ -2,7 +2,6 @@ class Generator {
 
   int rivers = (int) random(4) + 1;
   int mountains = (int) random(3) + 1;
-
   void generateMap(Map map) {
     gMountains(map);
     gRivers(map);
@@ -10,15 +9,7 @@ class Generator {
     gStartUnit(map);
   }
 
-  void gStartUnit(Map map){
-    int mapX = (int) random(MAP_WIDTH / (TILE_SIZE * 4));
-    int mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
-    Tile start = map.getMap()[startX][startY];
-    while (hex (start.getColor ()).equals(hex(WATER_COLOR)))
-    mapX = MAP_WIDTH / (TILE_SIZE * 4);
-    mapY = MAP_HEIGHT / (TILE_SIZE * 2);
-    start = map.getMap()[startX][startY];}
-    
+
   void gMountains(Map map) {
     while (mountains > 0) {
       int startX = (int) random(map.getWidth());

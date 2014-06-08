@@ -1,23 +1,40 @@
 GWindow window1;
 GButton EndTurnButton; 
-GImageButton Unit3; 
-GImageButton Unit2; 
-GImageButton Unit5; 
-GImageButton Unit4; 
 GImageButton Unit1; 
+GImageButton Unit2;
+GImageButton Unit3; 
+GImageButton Unit4; 
+GImageButton Unit5; 
 GImageButton Unit6; 
 GImageButton Unit7; 
 GImageButton Unit8; 
 GTextArea History; 
 GTextArea Stats;
 
+GImageButton Start; 
 synchronized public void draw (GWinApplet appc, GWinData data) { 
 } 
+
+ void gStartUnit(Map map){
+    int mapX = (int) random(MAP_WIDTH / (TILE_SIZE * 2));
+    int mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
+    Tile start = map.getMap()[mapX][mapY];
+    while (hex (start.getColor ()).equals(hex(WATER_COLOR))){
+    mapX = MAP_WIDTH / (TILE_SIZE * 4);
+    mapY = MAP_HEIGHT / (TILE_SIZE * 2);
+    start = map.getMap()[mapX][mapY];}
+    Sprite Settler = new Sprite(this,"Images/settler.png",0);
+    Settler.setXY(start.getCenterX(),start.getCenterY());
+    Settler.draw();
+  }
+  
+public void StartClick(GImageButton source, GEvent event) { 
+}
 
 public void EndTurnClick(GButton source, GEvent event) { 
 } 
 
-public void Unit1Click(GImageButton source, GEvent event) { 
+public void Unit1Click(GImageButton source, GEvent event) {  
 }
 
 public void UnitClick2(GImageButton source, GEvent event) {

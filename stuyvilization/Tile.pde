@@ -29,7 +29,13 @@ class Tile {
   ArrayList<Tile> getNeighbors() {
     return neighbors;
   }
-
+  
+  int getCenterX(){
+    return centerX;}
+    
+  int getCenterY(){
+    return centerY;}
+    
   color getColor() {
     return tileColor;
   }
