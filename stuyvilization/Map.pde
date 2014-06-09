@@ -6,7 +6,7 @@ class Map {
 
   public Map() {
     width = round(MAP_WIDTH / (TILE_SIZE * 2));
-    height = round(MAP_WIDTH / (TILE_SIZE * 2));
+    height = round(MAP_WIDTH / (TILE_SIZE * 2 + (TILE_SIZE / 2 * sqrt(3)) - 1));
     map = new Tile[width][height];
     for (int y=0; y<height; y++) {
       if (y % 2 == 0) {

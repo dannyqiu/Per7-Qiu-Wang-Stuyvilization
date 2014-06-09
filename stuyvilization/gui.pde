@@ -18,13 +18,13 @@ synchronized public void draw (GWinApplet appc, GWinData data) {
 } 
 
 Tile gPlayerStartUnit(Map map) {
-  int mapX = (int) random(MAP_WIDTH / (TILE_SIZE * 4));
-  int mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
-  Tile start = map.getMap()[mapX][mapY];
+  int startX = (int) random(map.getWidth() / 2);
+  int startY = (int) random(map.getHeight() / 2);
+  Tile start = map.getMap()[startX][startY];
   while (hex (start.getColor ()).equals(hex(WATER_COLOR))) {
-    mapX = (int) random(MAP_WIDTH / (TILE_SIZE * 4));
-    mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
-    start = map.getMap()[mapX][mapY];
+    startX = (int) random(map.getWidth() / 2);
+    startY = (int) random(map.getHeight() / 2);
+    start = map.getMap()[startX][startY];
   }
   start.setColor(MYTILE_COLOR);
   Unit Settler = new Settler(start.getCenterX(), start.getCenterY());
@@ -38,12 +38,12 @@ Tile gPlayerStartUnit(Map map) {
 }
 
 Tile gEnemyStartUnit(Map map) {
-  int startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + (MAP_WIDTH / (TILE_SIZE * 4)));
-  int startY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
+  int startX = (int) (random(map.getWidth() / 2) + map.getWidth() / 2);
+  int startY = (int) random(map.getHeight() / 2);
   Tile start = map.getMap()[startX][startY];
   while (hex (start.getColor ()).equals(hex(WATER_COLOR))) {
-    startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + (MAP_WIDTH / (TILE_SIZE * 4)));
-    startY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
+    startX = (int) (random(map.getWidth() / 2) + map.getWidth() / 2);
+    startY = (int) random(map.getHeight() / 2);
     start = map.getMap()[startX][startY];
   }
   start.setColor(ENEMYTILE_COLOR);
