@@ -41,7 +41,7 @@ void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
   Tile Current = game.getNearestTile(Selected.y,Selected.y);
   ArrayList<Tile> N = Current.getNeighbors();
-    if(sprite.eventType == Sprite.CLICK){
+    if(sprite.eventType == Sprite.CLICK && Selected instanceof Settler){
       Selected.CreateCapital();
       sprite.setDead(true);
     }
