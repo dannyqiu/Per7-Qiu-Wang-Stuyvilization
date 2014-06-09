@@ -1,14 +1,34 @@
 class Generator {
 
-  int rivers = (int) random(4) + 1;
+  int rivers = (int) random(10) + 1;
   int mountains = (int) random(3) + 1;
-  void generateMap(Map map) {
-    gMountains(map);
-    gRivers(map);
-    gRoads(map);
-    gStartUnit(map);
-  }
+  ArrayList<Tile> path = new ArrayList<Tile>();
+  boolean pathFound = false;
+  MapQueue<Tile> tilesToSearch = new MapQueue<Tile>();
 
+  void generateMap(Map map) {
+    while (!pathFound) {
+      /* Clearing the map of all previous generations */
+      try {
+        PLAYER_SETTLER.setDead(true);
+        ENEMY_SETTLER.setDead(true);
+      } 
+      catch (Exception e) {
+      }
+      Units.clear();
+      for (int y=0; y<map.getHeight (); y++) {
+        for (int x=0; x<map.getWidth (); x++) {
+          map.getMap()[x][y].setColor(LAND_COLOR);
+        }
+      }
+      
+      gMountains(map);
+      gRivers(map);
+      Tile playerStart = gPlayerStartUnit(map);
+      Tile enemyStart = gEnemyStartUnit(map);
+      gPath(map, playerStart, enemyStart);
+    }
+  }
 
   void gMountains(Map map) {
     while (mountains > 0) {
@@ -60,8 +80,39 @@ class Generator {
     }
   }
 
-  void gRoads(Map map) {
-    
+  void gPath(Map map, Tile start, Tile end) {
+    for (int y=0; y<map.getHeight (); y++) {
+      for (int x=0; x<map.getWidth (); x++) {
+        map.getMap()[x][y].mapTileBefore = null;
+      }
+    }
+    breadthSearch(start, end);
+    for (Tile p : path) {
+      p.setColor(#FFFFFF);
+    }
+  }
+
+  void breadthSearch(Tile start, Tile end) {
+    tilesToSearch.add(start);
+    while (tilesToSearch.getQueue ().size() > 0 && !pathFound) {
+      Tile current = tilesToSearch.remove();
+      for (Tile t : current.getNeighbors ()) {
+        if (t == end) {
+          t.mapTileBefore = current;
+          pathFound = true;
+        } else if (t.mapTileBefore == null && hex(t.getColor()).equals(hex(LAND_COLOR))) {
+          t.mapTileBefore = current;
+          tilesToSearch.add(t);
+        }
+      }
+    }
+    if (pathFound) {
+      Tile tmp = end;
+      while (tmp.mapTileBefore != null) {
+        path.add(0, tmp);
+        tmp = tmp.mapTileBefore;
+      }
+    }
   }
 }
 

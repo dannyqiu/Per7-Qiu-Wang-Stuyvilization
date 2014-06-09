@@ -2,7 +2,6 @@ import sprites.utils.*;
 import sprites.maths.*;
 import sprites.*;
 
-
 import g4p_controls.*;
 Map game;
 Generator generator;
@@ -18,8 +17,6 @@ public void setup() {
   Me = new Player();
 }
 
-
-    
 public void draw() {  
   Stats.setDefaultText ("Gold : " + Me.getGold());  
   background(255);

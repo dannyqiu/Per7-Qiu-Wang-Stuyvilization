@@ -6,6 +6,7 @@ class Tile {
   ArrayList<Tile> neighbors;
   color tileColor;
   int value;
+  Tile mapTileBefore = null; // Used for path-finding
 
   public Tile (float x, float y) {
     centerX = round(x * TILE_SIZE * 2);

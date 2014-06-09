@@ -15,7 +15,9 @@ public static final color WATER_COLOR = #0074D9;
 public static final color LAND_COLOR = #FFDC00;
 public static final color MOUNTAIN_COLOR = #CCCCCC;
 
+public static Sprite PLAYER_SETTLER;
 public static final color MYTILE_COLOR = #FF0000;
 public static final color MYHOME_COLOR = #7FFF00;
 
+public static Sprite ENEMY_SETTLER;
 public static final color ENEMYTILE_COLOR = #000000;

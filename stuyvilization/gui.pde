@@ -29,11 +29,11 @@ Tile gPlayerStartUnit(Map map) {
   start.setColor(MYTILE_COLOR);
   Unit Settler = new Settler(start.getCenterX(), start.getCenterY());
   Units.add(Settler);
-  Sprite X = new Sprite(this, "Images/settler.png", UnitNumber);
+  PLAYER_SETTLER = new Sprite(this, "Images/settler.png", UnitNumber);
   UnitNumber ++;
-  X.setXY(start.getCenterX(), start.getCenterY());
-  X.respondToMouse(true);
-  X.addEventHandler(this, "movement");
+  PLAYER_SETTLER.setXY(start.getCenterX(), start.getCenterY());
+  PLAYER_SETTLER.respondToMouse(true);
+  PLAYER_SETTLER.addEventHandler(this, "movement");
   return start;
 }
 
@@ -50,11 +50,11 @@ Tile gEnemyStartUnit(Map map) {
   Unit Settler = new Settler(start.getCenterX(), start.getCenterY());
   Units.add(Settler);
   Settler.enemy = true;
-  Sprite X = new Sprite(this, "Images/settler.png", UnitNumber);
+  ENEMY_SETTLER = new Sprite(this, "Images/settler.png", UnitNumber);
   UnitNumber++;
-  X.setXY(start.getCenterX(), start.getCenterY());
-  X.respondToMouse(true);
-  X.addEventHandler(this, "movement");
+  ENEMY_SETTLER.setXY(start.getCenterX(), start.getCenterY());
+  ENEMY_SETTLER.respondToMouse(true);
+  ENEMY_SETTLER.addEventHandler(this, "movement");
   return start;
 }
 
