@@ -8,5 +8,5 @@ int CapitalX;
 int CapitalY;
 public static final color WATER_COLOR = #0074D9;
 public static final color LAND_COLOR = #FFDC00;
-public static final color MOUNTAIN_COLOR = #FFFFFF;
+public static final color MOUNTAIN_COLOR = #CCCCCC;
 public static final color MYTILE_COLOR = #FF0000;

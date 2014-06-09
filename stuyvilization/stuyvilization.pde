@@ -6,6 +6,7 @@ import sprites.*;
 import g4p_controls.*;
 Map game;
 Generator generator;
+Player Me;
 
 public void setup() {
   setLocation(0,0);
