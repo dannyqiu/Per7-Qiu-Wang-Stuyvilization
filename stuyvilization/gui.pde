@@ -13,11 +13,12 @@ GTextArea Stats;
 
 GImageButton Start; 
 int UnitNumber = 0;
+int enemyUnitNumber = 0;
 int Turn = 1;
 synchronized public void draw (GWinApplet appc, GWinData data) {
 } 
 
-void gStartUnit(Map map) {
+Tile gPlayerStartUnit(Map map) {
   int mapX = (int) random(MAP_WIDTH / (TILE_SIZE * 4));
   int mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
   Tile start = map.getMap()[mapX][mapY];
@@ -34,15 +35,35 @@ void gStartUnit(Map map) {
   X.setXY(start.getCenterX(), start.getCenterY());
   X.respondToMouse(true);
   X.addEventHandler(this, "movement");
+  return start;
 }
 
+Tile gEnemyStartUnit(Map map) {
+  int startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + MAP_WIDTH / (TILE_SIZE * 4));
+  int startY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
+  Tile start = map.getMap()[startX][startY];
+  while (hex (start.getColor ()).equals(hex(WATER_COLOR))) {
+    startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + MAP_WIDTH / (TILE_SIZE * 4));
+    startY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
+    start = map.getMap()[startX][startY];
+  }
+  start.setColor(MYTILE_COLOR);
+  Unit Settler = new Settler(start.getCenterX(), start.getCenterY());
+  Units.add(Settler);
+  Sprite X = new Sprite(this, "Images/settler.png", UnitNumber);
+  enemyUnitNumber++;
+  X.setXY(start.getCenterX(), start.getCenterY());
+  X.respondToMouse(true);
+  X.addEventHandler(this, "movement");
+  return start;
+}
 
 void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
   Tile Current = game.getNearestTile(Selected.y, Selected.y);
   ArrayList<Tile> N = Current.getNeighbors();
   if (sprite.eventType == Sprite.CLICK && Selected instanceof Settler) {
-    Selected.CreateCapital();
+    ((Settler) Selected).CreateCapital();
     sprite.setDead(true);
   }
   if (sprite.eventType == Sprite.PRESS) {
@@ -51,9 +72,10 @@ void movement(Sprite sprite) {
       Tile start = game.getNearestTile(mouseX, mouseY);
       ArrayList<Tile> Test = start.getNeighbors();
       for (Tile x : Test) {
-        if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && (hex(start.getColor()).equals(hex(LAND_COLOR)) || hex(start.getColor()).equals(hex(MYTILE_COLOR)) || hex(start.getColor()).equals(hex(#7FFF00)))) {
+        if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
+          (hex(start.getColor()).equals(hex(LAND_COLOR)) || hex(start.getColor()).equals(hex(MYTILE_COLOR)) || hex(start.getColor()).equals(hex(MYHOME_COLOR)))) {
           sprite.setXY(start.getCenterX(), start.getCenterY());
-          if ( hex(start.getColor()).equals(hex(#7FFF00))) {
+          if ( hex(start.getColor()).equals(hex(MYHOME_COLOR))) {
           } else {
             start.setColor(MYTILE_COLOR);
           }
@@ -207,8 +229,6 @@ public void Unit8Click(GImageButton source, GEvent event) {
 
 public void Record(GTextArea source, GEvent event) {
 } 
-
-
 
 public void createGUI() {
   G4P.messagesEnabled(false);

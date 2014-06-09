@@ -3,6 +3,11 @@ Per7-Qiu-Wang-nameless
 
 Java Final Project for MKS22X - Spring 2014
 
+### Required Libraries
+
+- G4P
+- Sprites
+
 - Civilization V
 - depth-search recursion for enemy pathfinding
 - queue for stats tracking

@@ -9,5 +9,16 @@ class Settler extends Unit {
     x = xpos;
     y = ypos;
   }
-  
+    
+  public void CreateCapital(){
+  Tile Current = game.getNearestTile(x,y);
+  ArrayList<Tile> N = Current.getNeighbors();
+  for (Tile x: N){
+    if (hex(x.getColor()).equals(hex(LAND_COLOR)) || hex(x.getColor()).equals(hex(MYTILE_COLOR)))
+    x.setColor(MYTILE_COLOR);
+  }
+  Current.setColor(MYHOME_COLOR);
+  CapitalX = x;
+  CapitalY = y;
+  }
 }
