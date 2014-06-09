@@ -27,7 +27,7 @@ class Settler extends Unit {
       CapitalX = x;
       CapitalY = y;
     } else {
-      Current.setColor(ENEMYTILE_COLOR);
+      Current.setColor(ENEMYHOME_COLOR);
       enemyCapitalX = x;
       enemyCapitalY = y;
     }

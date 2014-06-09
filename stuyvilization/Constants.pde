@@ -5,6 +5,8 @@ public static final int TILE_SIZE = 18; // Radius of the Tile
 ArrayList<Unit> Units = new ArrayList<Unit>();
 ArrayList<Sprite> unitsSprites = new ArrayList<Sprite>();
 
+boolean Player1 = false;
+boolean Player2 = false;
 int CapitalX = -1;
 int CapitalY = -1;
 
@@ -22,5 +24,6 @@ public static final color MYHOME_COLOR = #7FFF00;
 
 public static Sprite ENEMY_SETTLER;
 public static final color ENEMYTILE_COLOR = #000000;
+public static final color ENEMYHOME_COLOR = #FFFF00;
 
 public static int Turn = 1;

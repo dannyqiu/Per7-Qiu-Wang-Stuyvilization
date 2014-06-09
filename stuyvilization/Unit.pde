@@ -83,11 +83,18 @@ abstract class Unit {
     Tile current = game.getNearestTile(x, y);
     if (!enemy) {
       if (!hex(current.getColor()).equals(hex(MYHOME_COLOR)) && !hex(current.getColor()).equals(hex(PATH_COLOR))) {
+        if (hex(current.getColor()).equals(hex(ENEMYHOME_COLOR)))
+          {Player1 = true;}           
         current.setColor(MYTILE_COLOR);
       }
-    } else {
+    } 
+    else {
+      if (!hex(current.getColor()).equals(hex(ENEMYHOME_COLOR)) && !hex(current.getColor()).equals(hex(PATH_COLOR))) {
+      if (hex(current.getColor()).equals(hex(MYHOME_COLOR)))
+          {Player2 = true;}    
       current.setColor(ENEMYTILE_COLOR);
     }
+  }
   }
 }
 

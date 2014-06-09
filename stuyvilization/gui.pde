@@ -235,37 +235,37 @@ public void UnitClick4(GImageButton source, GEvent event) {
     if (CapitalX == -1 && CapitalY == -1) {
       History.appendText("No Capital");
     } else {
-      Unit Settler = new Settler(40, 50);
-      if (Me.gold > Settler._cost) {
-        Sprite X = new Sprite(this, "Images/settler.png", UnitNumber); 
+      Unit Monk = new Monk(40, 50);
+      if (Me.gold > Monk._cost) {
+        Sprite X = new Sprite(this, "Images/monk.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
         Tile start = game.getNearestTile(CapitalX, CapitalY);
         X.setXY(start.getCenterX(), start.getCenterY());
-        Units.add (Settler);
+        Units.add (Monk);
         X.respondToMouse(true);
         X.addEventHandler(this, "movement");
-        Me.gold -= Settler._cost;
+        Me.gold -= Monk._cost;
       } else {
-        History.appendText("Not enough gold to buy a Settler!");
+        History.appendText("Not enough gold to buy a Monk!");
       }
     }
   } else {
     if (enemyCapitalX == -1 && enemyCapitalY == -1) {
       History.appendText("No Capital");
     } else {
-      Unit Settler = new Settler(40, 50);
-      if (Enemy.gold > Settler._cost) {
-        Sprite X = new Sprite(this, "Images/settler.png", UnitNumber);
+      Unit Monk = new Monk(40, 50);
+      if (Enemy.gold > Monk._cost) {
+        Sprite X = new Sprite(this, "Images/monk.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
         Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
         X.setXY(start.getCenterX(), start.getCenterY());
-        Settler.enemy = true;
-        Units.add (Settler);
+        Monk.enemy = true;
+        Units.add (Monk);
         X.respondToMouse(true);
         X.addEventHandler(this, "movement");
-        Enemy.gold -= Settler._cost;
+        Enemy.gold -= Monk._cost;
       } else {
         History.appendText("Not enough gold to buy a Settler!");
       }
