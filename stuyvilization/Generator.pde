@@ -107,7 +107,7 @@ class Generator {
       }
     }
     if (pathFound) {
-      Tile tmp = end;
+      Tile tmp = end.mapTileBefore;
       while (tmp.mapTileBefore != null) {
         path.add(0, tmp);
         tmp = tmp.mapTileBefore;

@@ -62,7 +62,6 @@ void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
   if ((!Selected.enemy && Turn % 2 == 1) || (Selected.enemy && Turn % 2 == 0)) {
     Tile Current = game.getNearestTile(Selected.x, Selected.y);
-    //ArrayList<Tile> N = Current.getNeighbors();
     if (sprite.eventType == Sprite.CLICK && Selected instanceof Settler) {
       ((Settler) Selected).CreateCapital();
       sprite.setDead(true);
@@ -89,7 +88,9 @@ public void StartClick(GImageButton source, GEvent event) {
 
 public void EndTurnClick(GButton source, GEvent event) { 
   for (Unit x : Units) {
-    x._movement = 2;
+    if (x != null) {
+      x._movement = 2;
+    }
   }
   Turn ++;
   if (Turn % 2 == 1) {

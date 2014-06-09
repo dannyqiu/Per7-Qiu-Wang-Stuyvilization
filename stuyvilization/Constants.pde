@@ -19,11 +19,11 @@ public static final color MOUNTAIN_COLOR = #CCCCCC;
 public static final color PATH_COLOR = #FFFFFF;
 
 public static Sprite PLAYER_SETTLER;
-public static final color MYTILE_COLOR = #FF0000;
-public static final color MYHOME_COLOR = #7FFF00;
+public static color MYTILE_COLOR = #FF4136;
+public static color MYHOME_COLOR = #7FFF00;
 
 public static Sprite ENEMY_SETTLER;
-public static final color ENEMYTILE_COLOR = #000000;
-public static final color ENEMYHOME_COLOR = #FFFF00;
+public static color ENEMYTILE_COLOR = #87540C;
+public static color ENEMYHOME_COLOR = #000000;
 
 public static int Turn = 1;
