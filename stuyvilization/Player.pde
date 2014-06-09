@@ -1,27 +1,25 @@
 public class Player {
 
-  ArrayList<Unit> OwnedUnits;
-  ArrayList<Resource> OwnedResources; 
-  ArrayList<Tile> OwnedTiles;
   int gold;
 
   public Player() {
     gold = 100;
-    OwnedUnits = new ArrayList<Unit>();
-    OwnedResources = new ArrayList<Resource>();
-    OwnedTiles = new ArrayList<Tile>();
   }
 
-  int getGold(){
-    return gold;}
-    
+  int getGold() {
+    return gold;
+  }
+
   void newTurn() {
-    for (Resource x : OwnedResources) {
-      gold += x.getValue();
-    }
-    for (Tile x : OwnedTiles) {
-      gold += x.getValue();
+    for (int y=0; y<game.getHeight (); y++) {
+      for (int x=0; x<game.getWidth (); x++) {
+        if (hex(game.getMap()[x][y].getColor()).equals(hex(MYTILE_COLOR))) {
+          gold += game.getMap()[x][y].getValue();
+        } else if (hex(game.getMap()[x][y].getColor()).equals(hex(MYHOME_COLOR))) {
+          gold += game.getMap()[x][y].getValue() * 3;
+        }
+      }
     }
   }
-
 }
+

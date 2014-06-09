@@ -97,6 +97,7 @@ public void EndTurnClick(GButton source, GEvent event) {
   }
   Turn += 1;
   History.setText("Turn " + Turn);
+  Me.newTurn();
 } 
 
 public void Unit1Click(GImageButton source, GEvent event) {
@@ -111,7 +112,11 @@ public void Unit1Click(GImageButton source, GEvent event) {
     Units.add (Thief);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Thief._cost;
+    if (Me.gold > Thief._cost) {
+      Me.gold -= Thief._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Thief!");
+    }
   }
 }
 
@@ -127,7 +132,11 @@ public void UnitClick2(GImageButton source, GEvent event) {
     Units.add (Warrior);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Warrior._cost;
+    if (Me.gold > Warrior._cost) {
+      Me.gold -= Warrior._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Warrior!");
+    }
   }
 } 
 
@@ -143,7 +152,11 @@ public void UnitClick3(GImageButton source, GEvent event) {
     Units.add (Archer);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Archer._cost;
+    if (Me.gold > Archer._cost) {
+      Me.gold -= Archer._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Archer!");
+    }
   }
 }
 
@@ -159,7 +172,11 @@ public void UnitClick4(GImageButton source, GEvent event) {
     Units.add (Settler);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Settler._cost;
+    if (Me.gold > Settler._cost) {
+      Me.gold -= Settler._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Settler!");
+    }
   }
 } 
 
@@ -175,7 +192,11 @@ public void Unit5Click(GImageButton source, GEvent event) {
     Units.add (Mage);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Mage._cost;
+    if (Me.gold > Mage._cost) {
+      Me.gold -= Mage._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Mage!");
+    }
   }
 } 
 
@@ -191,7 +212,11 @@ public void Unit6Click(GImageButton source, GEvent event) {
     Units.add (Knight);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Knight._cost;
+    if (Me.gold > Knight._cost) {
+      Me.gold -= Knight._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Knight!");
+    }
   }
 } 
 
@@ -207,7 +232,11 @@ public void Unit7Click(GImageButton source, GEvent event) {
     Units.add (Horse);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Horse._cost;
+    if (Me.gold > Horse._cost) {
+      Me.gold -= Horse._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Horseman!");
+    }
   }
 } 
 
@@ -223,7 +252,11 @@ public void Unit8Click(GImageButton source, GEvent event) {
     Units.add (Berserker);
     X.respondToMouse(true);
     X.addEventHandler(this, "movement");
-    Me.gold -= Berserker._cost;
+    if (Me.gold > Berserker._cost) {
+      Me.gold -= Berserker._cost;
+    } else {
+      History.appendText("Not enough gold to buy a Berserker!");
+    }
   }
 } 
 
