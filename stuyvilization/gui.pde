@@ -60,7 +60,7 @@ Tile gEnemyStartUnit(Map map) {
 
 void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
-  if ((!Selected.enemy && Turn % 2 == 1) || (Selected.enemy && Turn % 2 == 0)) {
+  if (Selected != null && (!Selected.enemy && Turn % 2 == 1) || (Selected.enemy && Turn % 2 == 0)) {
     Tile Current = game.getNearestTile(Selected.x, Selected.y);
     if (sprite.eventType == Sprite.CLICK && Selected instanceof Settler) {
       ((Settler) Selected).CreateCapital();

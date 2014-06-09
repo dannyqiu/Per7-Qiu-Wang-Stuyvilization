@@ -17,7 +17,6 @@ class Generator {
       }
       catch (Exception e) {
       }
-      Units.clear();
       for (int y=0; y<map.getHeight (); y++) {
         for (int x=0; x<map.getWidth (); x++) {
           map.getMap()[x][y].setColor(LAND_COLOR);
