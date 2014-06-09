@@ -9,4 +9,5 @@ class Settler extends Unit {
     x = xpos;
     y = ypos;
   }
+  
 }

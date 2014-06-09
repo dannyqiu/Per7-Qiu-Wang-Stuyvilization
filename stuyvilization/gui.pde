@@ -14,6 +14,7 @@ GTextArea Stats;
 GImageButton Start; 
 Player Me;
 int UnitNumber = 0;
+int Turn = 1;
 synchronized public void draw (GWinApplet appc, GWinData data) { 
 } 
 
@@ -26,7 +27,7 @@ synchronized public void draw (GWinApplet appc, GWinData data) {
     mapY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
     start = map.getMap()[mapX][mapY];}
     start.setColor(MYTILE_COLOR);
-    Unit Settler = new Settler(mapX,mapY);
+    Unit Settler = new Settler(start.getCenterX(),start.getCenterY());
     Units.add(Settler);
     Sprite X = new Sprite(this,"Images/settler.png",UnitNumber);
     UnitNumber ++;
@@ -38,17 +39,31 @@ synchronized public void draw (GWinApplet appc, GWinData data) {
   
 void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
+  Tile Current = game.getNearestTile(Selected.y,Selected.y);
+  ArrayList<Tile> N = Current.getNeighbors();
+    if(sprite.eventType == Sprite.CLICK){
+      Selected.CreateCapital();
+      sprite.setDead(true);
+    }
   if(sprite.eventType == Sprite.PRESS){
 }
   else if(sprite.eventType == Sprite.RELEASE){
     if (Selected._movement > 0){
     Tile start = game.getNearestTile(mouseX,mouseY);
+    ArrayList<Tile> Test = start.getNeighbors();
+    for (Tile x : Test){
+    if ((x.getCenterX() == (int) sprite.getX()) && (hex(start.getColor()).equals(hex(LAND_COLOR)) || hex(start.getColor()).equals(hex(MYTILE_COLOR)) || hex(start.getColor()).equals(hex(#7FFF00)))){
     sprite.setXY(start.getCenterX(),start.getCenterY());
-    start.setColor(MYTILE_COLOR);
-    Selected._movement --;}
+    if ( hex(start.getColor()).equals(hex(#7FFF00))){}
+    else{start.setColor(MYTILE_COLOR);}
+    Selected.x = start.getCenterX();
+    Selected.y = start.getCenterY();
+    Selected._movement --;
+    }
     }
    }
-
+}
+}
   
 public void StartClick(GImageButton source, GEvent event) { 
 }
@@ -56,94 +71,136 @@ public void StartClick(GImageButton source, GEvent event) {
 public void EndTurnClick(GButton source, GEvent event) { 
   for (Unit x: Units){
     x._movement = 2;}
+  Turn += 1;
+  History.setText("Turn " + Turn);
 } 
 
-public void Unit1Click(GImageButton source, GEvent event) { 
+public void Unit1Click(GImageButton source, GEvent event) {
+ if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
  Sprite X = new Sprite(this,"Images/thief.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+ Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Thief = new Thief(40,50);
  Units.add (Thief);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Thief._cost;
+ }
 }
 
 public void UnitClick2(GImageButton source, GEvent event) {
+ if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
  Sprite X = new Sprite(this,"Images/warrior.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+ Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Warrior = new Warrior(40,50);
  Units.add (Warrior);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Warrior._cost;
+ }
 } 
 
 public void UnitClick3(GImageButton source, GEvent event) { 
+  if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
  Sprite X = new Sprite(this,"Images/archer.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+ Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Archer = new Archer(40,50);
  Units.add (Archer);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Archer._cost;
+ }
 }
 
 public void UnitClick4(GImageButton source, GEvent event) { 
-Sprite X = new Sprite(this,"Images/settler.png",UnitNumber); 
+   if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
+ Sprite X = new Sprite(this,"Images/settler.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+ Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Settler = new Settler(40,50);
  Units.add (Settler);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Settler._cost;
+ }
 } 
 
 public void Unit5Click(GImageButton source, GEvent event) {
+   if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
  Sprite X = new Sprite(this,"Images/mage.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+ Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Mage = new Mage(40,50);
  Units.add (Mage);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Mage._cost;
+ }
 } 
 
 public void Unit6Click(GImageButton source, GEvent event) {
+ if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
  Sprite X = new Sprite(this,"Images/knight.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+ Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Knight = new Knight(40,50);
  Units.add (Knight);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Knight._cost;
+ }
 } 
 
 public void Unit7Click(GImageButton source, GEvent event) { 
+ if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
  Sprite X = new Sprite(this,"Images/horse.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+  Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Horse = new Horse(40,50);
  Units.add (Horse);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Horse._cost;
+ }
 } 
 
 public void Unit8Click(GImageButton source, GEvent event) { 
+ if (CapitalX == 0 && CapitalY == 0){
+  History.appendText("No Capital");}
+ else{ 
  Sprite X = new Sprite(this,"Images/berserker.png",UnitNumber); 
  UnitNumber ++;
- X.setXY(35,50);
+ Tile start = game.getNearestTile(CapitalX,CapitalY);
+ X.setXY(start.getCenterX(),start.getCenterY());
  Unit Berserker = new Berserker(40,50);
  Units.add (Berserker);
  X.respondToMouse(true);
  X.addEventHandler(this,"movement");
  Me.gold -= Berserker._cost;
+ }
 } 
 
 public void Record(GTextArea source, GEvent event) { 
@@ -170,7 +227,7 @@ public void createGUI(){
   Unit2.addEventHandler(this, "UnitClick2");
   Unit3 = new GImageButton(window1.papplet, 0, 300, 140, 140, new String[] { "Images/Archer_(Civ5).png", "Images/Archer_(Civ5).png", "Images/Archer_(Civ5).png" } );
   Unit3.addEventHandler(this, "UnitClick3");
-  Unit4 = new GImageButton(window1.papplet, 140, 300, 140, 140, new String[] { "Images/Settler_(Civ5).png", "Images/Settler_(Civ5).png", "Images/Settler_(Civ5).png" } );
+  Unit4 = new GImageButton(window1.papplet, 140, 300, 140, 140, new String[] { "Images/monk.png", "Images/monk.png", "Images/monk.png" } );
   Unit4.addEventHandler(this, "UnitClick4");
   Unit5 = new GImageButton(window1.papplet, 0, 440, 140, 140, new String[] { "Images/Prophet_(Civ5).png", "Images/Prophet_(Civ5).png", "Images/Prophet_(Civ5).png" } );
   Unit5.addEventHandler(this, "Unit5Click");
@@ -184,7 +241,7 @@ public void createGUI(){
   Stats.setTextEditEnabled(false);
   History = new GTextArea(window1.papplet, 80, 20, 200, 140, G4P.SCROLLBARS_NONE);
   History.setTextEditEnabled(false);
-  History.setDefaultText ("Welcome");
+  History.setText ("Turn 1: \n Click to Settle, Drag to Move");
   History.addEventHandler(this, "Record");
 }
 
