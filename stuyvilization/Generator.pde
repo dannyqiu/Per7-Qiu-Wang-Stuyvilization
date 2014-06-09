@@ -12,7 +12,9 @@ class Generator {
       try {
         PLAYER_SETTLER.setDead(true);
         ENEMY_SETTLER.setDead(true);
-      } 
+        Units.clear();
+        unitsSprites.clear();
+      }
       catch (Exception e) {
       }
       Units.clear();
@@ -21,7 +23,7 @@ class Generator {
           map.getMap()[x][y].setColor(LAND_COLOR);
         }
       }
-      
+
       gMountains(map);
       gRivers(map);
       Tile playerStart = gPlayerStartUnit(map);

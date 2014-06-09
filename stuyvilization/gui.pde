@@ -1,17 +1,17 @@
 GWindow window1;
-GButton EndTurnButton; 
-GImageButton Unit1; 
+GButton EndTurnButton;
+GImageButton Unit1;
 GImageButton Unit2;
-GImageButton Unit3; 
-GImageButton Unit4; 
-GImageButton Unit5; 
-GImageButton Unit6; 
-GImageButton Unit7; 
-GImageButton Unit8; 
-GTextArea History; 
+GImageButton Unit3;
+GImageButton Unit4;
+GImageButton Unit5;
+GImageButton Unit6;
+GImageButton Unit7;
+GImageButton Unit8;
+GTextArea History;
 GTextArea Stats;
 
-GImageButton Start; 
+GImageButton Start;
 int UnitNumber = 0;
 
 synchronized public void draw (GWinApplet appc, GWinData data) {
@@ -66,45 +66,40 @@ void movement(Sprite sprite) {
       ((Settler) Selected).CreateCapital();
       sprite.setDead(true);
     }
-   if (sprite.eventType == Sprite.CLICK){
-      History.appendText("Selected Unit Health " + Selected.getHealth());}
+    if (sprite.eventType == Sprite.CLICK) {
+      History.appendText("Selected Unit Health " + Selected.getHealth());
+    }
     if (sprite.eventType == Sprite.PRESS) {
     } else if (sprite.eventType == Sprite.RELEASE) {
-     if(Selected instanceof Berserker){    
-        Tile start = game.getNearestTile(mouseX, mouseY);
-        ArrayList<Tile> Test = start.getNeighbors();
+      Tile start = game.getNearestTile(mouseX, mouseY);
+      ArrayList<Tile> Test = start.getNeighbors();
+      if (Selected instanceof Berserker) {
         for (Tile x : Test) {
           if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
             (!hex(start.getColor()).equals(hex(WATER_COLOR)))) {
             sprite.setXY(start.getCenterX(), start.getCenterY());
-            Selected.move(start.getCenterX(), start.getCenterY());  
+            Selected.move(start.getCenterX(), start.getCenterY());
+          }
         }
-        }
-        }
-        else if(Selected instanceof Pirate){    
-        Tile start = game.getNearestTile(mouseX, mouseY);
-        ArrayList<Tile> Test = start.getNeighbors();
+      } else if (Selected instanceof Pirate) {
         for (Tile x : Test) {
           if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
             (!hex(start.getColor()).equals(hex(MOUNTAIN_COLOR)))) {
             sprite.setXY(start.getCenterX(), start.getCenterY());
-            Selected.move(start.getCenterX(), start.getCenterY());  
-        }
-        }
-        } 
-       else{
-      if (Selected._movement > 0) {
-        Tile start = game.getNearestTile(mouseX, mouseY);
-        ArrayList<Tile> Test = start.getNeighbors();
-        for (Tile x : Test) {
-          if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
-            (!hex(start.getColor()).equals(hex(WATER_COLOR)) && !hex(start.getColor()).equals(hex(MOUNTAIN_COLOR)))) {
-            sprite.setXY(start.getCenterX(), start.getCenterY());
             Selected.move(start.getCenterX(), start.getCenterY());
           }
         }
+      } else {
+        if (Selected._movement > 0) {
+          for (Tile x : Test) {
+            if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
+              (!hex(start.getColor()).equals(hex(WATER_COLOR)) && !hex(start.getColor()).equals(hex(MOUNTAIN_COLOR)))) {
+              sprite.setXY(start.getCenterX(), start.getCenterY());
+              Selected.move(start.getCenterX(), start.getCenterY());
+            }
+          }
+        }
       }
-    }
     }
   }
 }
@@ -116,8 +111,9 @@ public void EndTurnClick(GButton source, GEvent event) {
   for (Unit x : Units) {
     if (x != null) {
       x._movement = 2;
-    if (x instanceof Horse){
-      x._movement = 3;}
+      if (x instanceof Horse) {
+        x._movement = 3;
+      }
     }
   }
   Turn ++;
@@ -136,7 +132,7 @@ public void Unit1Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else { 
       Unit Thief = new Thief(40, 50);
-      if (Me.gold > Thief._cost) {
+      if (Me.gold >= Thief._cost) {
         Sprite X = new Sprite(this, "Images/thief.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -155,7 +151,7 @@ public void Unit1Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Thief = new Thief(40, 50);
-      if (Enemy.gold > Thief._cost) {
+      if (Enemy.gold >= Thief._cost) {
         Sprite X = new Sprite(this, "Images/thief.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -179,7 +175,7 @@ public void UnitClick2(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Warrior = new Warrior(40, 50);
-      if (Me.gold > Warrior._cost) {
+      if (Me.gold >= Warrior._cost) {
         Sprite X = new Sprite(this, "Images/warrior.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
@@ -198,7 +194,7 @@ public void UnitClick2(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Warrior = new Warrior(40, 50);
-      if (Enemy.gold > Warrior._cost) {
+      if (Enemy.gold >= Warrior._cost) {
         Sprite X = new Sprite(this, "Images/warrior.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -222,7 +218,7 @@ public void UnitClick3(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Archer = new Archer(40, 50);
-      if (Me.gold > Archer._cost) {
+      if (Me.gold >= Archer._cost) {
         Sprite X = new Sprite(this, "Images/archer.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
@@ -241,7 +237,7 @@ public void UnitClick3(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Archer = new Archer(40, 50);
-      if (Enemy.gold > Archer._cost) {
+      if (Enemy.gold >= Archer._cost) {
         Sprite X = new Sprite(this, "Images/archer.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -265,7 +261,7 @@ public void UnitClick4(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Monk = new Monk(40, 50);
-      if (Me.gold > Monk._cost) {
+      if (Me.gold >= Monk._cost) {
         Sprite X = new Sprite(this, "Images/monk.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
@@ -284,7 +280,7 @@ public void UnitClick4(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Monk = new Monk(40, 50);
-      if (Enemy.gold > Monk._cost) {
+      if (Enemy.gold >= Monk._cost) {
         Sprite X = new Sprite(this, "Images/monk.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -308,7 +304,7 @@ public void Unit5Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else { 
       Unit Mage = new Mage(40, 50);
-      if (Me.gold > Mage._cost) {
+      if (Me.gold >= Mage._cost) {
         Sprite X = new Sprite(this, "Images/mage.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
@@ -327,7 +323,7 @@ public void Unit5Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Mage = new Mage(40, 50);
-      if (Enemy.gold > Mage._cost) {
+      if (Enemy.gold >= Mage._cost) {
         Sprite X = new Sprite(this, "Images/mage.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -351,7 +347,7 @@ public void Unit6Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else { 
       Unit Pirate = new Pirate(40, 50);
-      if (Me.gold > Pirate._cost) {
+      if (Me.gold >= Pirate._cost) {
         Sprite X = new Sprite(this, "Images/pirate.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
@@ -370,7 +366,7 @@ public void Unit6Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Pirate = new Pirate(40, 50);
-      if (Enemy.gold > Pirate._cost) {
+      if (Enemy.gold >= Pirate._cost) {
         Sprite X = new Sprite(this, "Images/pirate.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -394,7 +390,7 @@ public void Unit7Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else { 
       Unit Horse = new Horse(40, 50);
-      if (Me.gold > Horse._cost) {
+      if (Me.gold >= Horse._cost) {
         Sprite X = new Sprite(this, "Images/horse.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
@@ -413,7 +409,7 @@ public void Unit7Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Horse = new Horse(40, 50);
-      if (Enemy.gold > Horse._cost) {
+      if (Enemy.gold >= Horse._cost) {
         Sprite X = new Sprite(this, "Images/horse.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
@@ -437,7 +433,7 @@ public void Unit8Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else { 
       Unit Berserker = new Berserker(40, 50);
-      if (Me.gold > Berserker._cost) {
+      if (Me.gold >= Berserker._cost) {
         Sprite X = new Sprite(this, "Images/berserker.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
@@ -456,7 +452,7 @@ public void Unit8Click(GImageButton source, GEvent event) {
       History.appendText("No Capital");
     } else {
       Unit Berserker = new Berserker(40, 50);
-      if (Enemy.gold > Berserker._cost) {
+      if (Enemy.gold >= Berserker._cost) {
         Sprite X = new Sprite(this, "Images/berserker.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;

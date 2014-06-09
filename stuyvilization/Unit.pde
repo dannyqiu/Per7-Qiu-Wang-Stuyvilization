@@ -58,7 +58,7 @@ abstract class Unit {
       Unit u = Units.get(i);
       if (u != null && u.enemy != this.enemy) {
         while (game.getNearestTile (u.getX (), u.getY()) == game.getNearestTile(this.getX(), this.getY())) {
-          attack(u);
+          this.attack(u);
           u.attack(this);
           if (u.getHealth() <= 0) {
             unitsSprites.get(i).setDead(true);
@@ -83,18 +83,19 @@ abstract class Unit {
     Tile current = game.getNearestTile(x, y);
     if (!enemy) {
       if (!hex(current.getColor()).equals(hex(MYHOME_COLOR)) && !hex(current.getColor()).equals(hex(PATH_COLOR)) && !hex(current.getColor()).equals(hex(WATER_COLOR)) && !hex(current.getColor()).equals(hex(MOUNTAIN_COLOR))) {
-        if (hex(current.getColor()).equals(hex(ENEMYHOME_COLOR)))
-          {Player1 = true;}           
+        if (hex(current.getColor()).equals(hex(ENEMYHOME_COLOR))) {
+          Player1 = true;
+        }           
         current.setColor(MYTILE_COLOR);
       }
-    } 
-    else {
+    } else {
       if (!hex(current.getColor()).equals(hex(ENEMYHOME_COLOR)) && !hex(current.getColor()).equals(hex(PATH_COLOR)) && !hex(current.getColor()).equals(hex(WATER_COLOR)) && !hex(current.getColor()).equals(hex(MOUNTAIN_COLOR))) {
-      if (hex(current.getColor()).equals(hex(MYHOME_COLOR)))
-          {Player2 = true;}    
-      current.setColor(ENEMYTILE_COLOR);
+        if (hex(current.getColor()).equals(hex(MYHOME_COLOR))) {
+          Player2 = true;
+        }    
+        current.setColor(ENEMYTILE_COLOR);
+      }
     }
-  }
   }
 }
 

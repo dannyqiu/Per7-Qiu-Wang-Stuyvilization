@@ -14,7 +14,7 @@ class Settler extends Unit {
     Tile Current = game.getNearestTile(x, y);
     ArrayList<Tile> N = Current.getNeighbors();
     for (Tile x : N) {
-      if (hex(x.getColor()).equals(hex(LAND_COLOR)) || hex(x.getColor()).equals(hex(MYTILE_COLOR))) {
+      if (hex(x.getColor()).equals(hex(LAND_COLOR)) || hex(x.getColor()).equals(hex(MYTILE_COLOR)) || hex(x.getColor()).equals(ENEMYTILE_COLOR)) {
         if (!enemy) {
           x.setColor(MYTILE_COLOR);
         } else {
@@ -31,6 +31,7 @@ class Settler extends Unit {
       enemyCapitalX = x;
       enemyCapitalY = y;
     }
+    Units.set(Units.indexOf(this), null);
   }
 }
 
