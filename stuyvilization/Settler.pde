@@ -1,5 +1,5 @@
 class Settler extends Unit {
-  public Settler(int xpos,int ypos) {
+  public Settler(int xpos, int ypos) {
     _health = 10;
     _strength = 0;
     _movement = 2;
@@ -9,16 +9,28 @@ class Settler extends Unit {
     x = xpos;
     y = ypos;
   }
-    
-  public void CreateCapital(){
-  Tile Current = game.getNearestTile(x,y);
-  ArrayList<Tile> N = Current.getNeighbors();
-  for (Tile x: N){
-    if (hex(x.getColor()).equals(hex(LAND_COLOR)) || hex(x.getColor()).equals(hex(MYTILE_COLOR)))
-    x.setColor(MYTILE_COLOR);
-  }
-  Current.setColor(MYHOME_COLOR);
-  CapitalX = x;
-  CapitalY = y;
+
+  public void CreateCapital() {
+    Tile Current = game.getNearestTile(x, y);
+    ArrayList<Tile> N = Current.getNeighbors();
+    for (Tile x : N) {
+      if (hex(x.getColor()).equals(hex(LAND_COLOR)) || hex(x.getColor()).equals(hex(MYTILE_COLOR))) {
+        if (!enemy) {
+          x.setColor(MYTILE_COLOR);
+        } else {
+          x.setColor(ENEMYTILE_COLOR);
+        }
+      }
+    }
+    if (!enemy) {
+      Current.setColor(MYHOME_COLOR);
+      CapitalX = x;
+      CapitalY = y;
+    } else {
+      Current.setColor(ENEMYTILE_COLOR);
+      enemyCapitalX = x;
+      enemyCapitalY = y;
+    }
   }
 }
+

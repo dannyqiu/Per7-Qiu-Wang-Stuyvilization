@@ -13,7 +13,6 @@ GTextArea Stats;
 
 GImageButton Start; 
 int UnitNumber = 0;
-int enemyUnitNumber = 0;
 int Turn = 1;
 synchronized public void draw (GWinApplet appc, GWinData data) {
 } 
@@ -39,19 +38,20 @@ Tile gPlayerStartUnit(Map map) {
 }
 
 Tile gEnemyStartUnit(Map map) {
-  int startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + MAP_WIDTH / (TILE_SIZE * 4));
+  int startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + (MAP_WIDTH / (TILE_SIZE * 4)));
   int startY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
   Tile start = map.getMap()[startX][startY];
   while (hex (start.getColor ()).equals(hex(WATER_COLOR))) {
-    startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + MAP_WIDTH / (TILE_SIZE * 4));
+    startX = (int) (random(MAP_WIDTH / (TILE_SIZE * 4)) + (MAP_WIDTH / (TILE_SIZE * 4)));
     startY = (int) random(MAP_HEIGHT / (TILE_SIZE * 2));
     start = map.getMap()[startX][startY];
   }
-  start.setColor(MYTILE_COLOR);
+  start.setColor(ENEMYTILE_COLOR);
   Unit Settler = new Settler(start.getCenterX(), start.getCenterY());
   Units.add(Settler);
+  Settler.enemy = true;
   Sprite X = new Sprite(this, "Images/settler.png", UnitNumber);
-  enemyUnitNumber++;
+  UnitNumber++;
   X.setXY(start.getCenterX(), start.getCenterY());
   X.respondToMouse(true);
   X.addEventHandler(this, "movement");
@@ -60,7 +60,7 @@ Tile gEnemyStartUnit(Map map) {
 
 void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
-  Tile Current = game.getNearestTile(Selected.y, Selected.y);
+  Tile Current = game.getNearestTile(Selected.x, Selected.y);
   ArrayList<Tile> N = Current.getNeighbors();
   if (sprite.eventType == Sprite.CLICK && Selected instanceof Settler) {
     ((Settler) Selected).CreateCapital();
@@ -100,7 +100,7 @@ public void EndTurnClick(GButton source, GEvent event) {
 } 
 
 public void Unit1Click(GImageButton source, GEvent event) {
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/thief.png", UnitNumber); 
@@ -116,7 +116,7 @@ public void Unit1Click(GImageButton source, GEvent event) {
 }
 
 public void UnitClick2(GImageButton source, GEvent event) {
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/warrior.png", UnitNumber); 
@@ -132,7 +132,7 @@ public void UnitClick2(GImageButton source, GEvent event) {
 } 
 
 public void UnitClick3(GImageButton source, GEvent event) { 
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/archer.png", UnitNumber); 
@@ -148,7 +148,7 @@ public void UnitClick3(GImageButton source, GEvent event) {
 }
 
 public void UnitClick4(GImageButton source, GEvent event) { 
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/settler.png", UnitNumber); 
@@ -164,7 +164,7 @@ public void UnitClick4(GImageButton source, GEvent event) {
 } 
 
 public void Unit5Click(GImageButton source, GEvent event) {
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/mage.png", UnitNumber); 
@@ -180,7 +180,7 @@ public void Unit5Click(GImageButton source, GEvent event) {
 } 
 
 public void Unit6Click(GImageButton source, GEvent event) {
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/knight.png", UnitNumber); 
@@ -196,7 +196,7 @@ public void Unit6Click(GImageButton source, GEvent event) {
 } 
 
 public void Unit7Click(GImageButton source, GEvent event) { 
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/horse.png", UnitNumber); 
@@ -212,7 +212,7 @@ public void Unit7Click(GImageButton source, GEvent event) {
 } 
 
 public void Unit8Click(GImageButton source, GEvent event) { 
-  if (CapitalX == 0 && CapitalY == 0) {
+  if (CapitalX == -1 && CapitalY == -1) {
     History.appendText("No Capital");
   } else { 
     Sprite X = new Sprite(this, "Images/berserker.png", UnitNumber); 

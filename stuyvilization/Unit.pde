@@ -3,6 +3,7 @@ abstract class Unit {
   //Stats
   int _health, _strength, _range, _cost, _movement,x,y;
   String _name, _status; // (CanMove,Moved,Dead,Defending,Capturing)
+  boolean enemy = false;
 
   //Accessors
   int getHealth() {
@@ -39,14 +40,19 @@ abstract class Unit {
   void move(Map map) {
      x = mouseX;
      y = mouseY;
-     capture(map);
+     capture();
    }  
   void attack(Unit target) {
     target._health -= this.getStrength();
   }
-  void capture(Map map) {
-    Tile current = map.getMap()[x][y];
-    current.setColor(MYTILE_COLOR);
+  void capture() {
+    Tile current = game.getMap()[x][y];
+    if (!enemy) {
+      current.setColor(MYTILE_COLOR);
+    }
+    else {
+      current.setColor(ENEMYTILE_COLOR);
+    }
   }
 
 }
