@@ -31,6 +31,7 @@ Tile gPlayerStartUnit(Map map) {
   Units.add(Settler);
   PLAYER_SETTLER = new Sprite(this, "Images/settler.png", UnitNumber);
   UnitNumber ++;
+  unitsSprites.add(PLAYER_SETTLER);
   PLAYER_SETTLER.setXY(start.getCenterX(), start.getCenterY());
   PLAYER_SETTLER.respondToMouse(true);
   PLAYER_SETTLER.addEventHandler(this, "movement");
@@ -52,6 +53,7 @@ Tile gEnemyStartUnit(Map map) {
   Settler.enemy = true;
   ENEMY_SETTLER = new Sprite(this, "Images/settler.png", UnitNumber);
   UnitNumber++;
+  unitsSprites.add(ENEMY_SETTLER);
   ENEMY_SETTLER.setXY(start.getCenterX(), start.getCenterY());
   ENEMY_SETTLER.respondToMouse(true);
   ENEMY_SETTLER.addEventHandler(this, "movement");

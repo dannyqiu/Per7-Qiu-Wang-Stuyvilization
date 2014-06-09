@@ -1,7 +1,7 @@
 class Generator {
 
-  int rivers = (int) random(10) + 1;
-  int mountains = (int) random(3) + 1;
+  int rivers = (int) random(MAP_WIDTH * MAP_HEIGHT / 72000) + 1;
+  int mountains = (int) random(MAP_WIDTH * MAP_HEIGHT / 240000) + 1;
   ArrayList<Tile> path = new ArrayList<Tile>();
   boolean pathFound = false;
   MapQueue<Tile> tilesToSearch = new MapQueue<Tile>();
@@ -67,7 +67,7 @@ class Generator {
       rivers--;
     }
     for (int y=0; y<map.getHeight (); y++) {
-      for (int x=0; x<map.getHeight (); x++) {
+      for (int x=0; x<map.getWidth (); x++) {
         boolean allWater = true;
         for (Tile t : map.getMap ()[x][y].getNeighbors()) {
           if (!hex(t.getColor()).equals(hex(WATER_COLOR))) {

@@ -4,7 +4,7 @@ class Berserker extends Unit {
     _strength = 12;
     _movement = 2;
     _range = 1;
-    _cost = 500;
+    _cost = 250;
     _name = "Berserker";
     x = xpos;
     y = ypos;

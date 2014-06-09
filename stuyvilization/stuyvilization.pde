@@ -28,25 +28,25 @@ public void setup() {
   Enemy = new Player(true);
 
   menu = true;
-  header = createFont("Arial", 84, true);  
-  sub = createFont("Arial", 48, true);  
+  header = createFont("Arial", MAP_HEIGHT / 8.5, true);  
+  sub = createFont("Arial", MAP_HEIGHT / 15, true);  
   start = loadImage("Images/2048.jpg");
-  x = width;
-  w = textWidth(headlines[0]);
+  x = MAP_WIDTH;
+  w = textWidth(headlines[1]);
 }
 
 public void draw() {
   if (menu) {
-    image(start, 0, 0, 1280, 720);
+    image(start, 0, 0, MAP_WIDTH, MAP_HEIGHT);
     fill(0);
     textFont(header);
     textAlign(CENTER);
-    text(headlines[0], x, 280);
+    text(headlines[0], x, MAP_HEIGHT / 2.5);
     textFont(sub);
-    text(headlines[1], x, 360);
+    text(headlines[1], x, MAP_HEIGHT / 2);
     x = x - 5;
     if (x < -w) {
-      x = width;
+      x = MAP_WIDTH;
     }
     if (keyPressed) {
       if (key == ' ') {
@@ -66,10 +66,10 @@ public void draw() {
       S4P.drawSprites();
     } else if (Player1 == true) {
       PImage win = loadImage("Images/p1.jpg");
-      image(win, 500, 360);
+      image(win, MAP_WIDTH / 2, MAP_HEIGHT / 2);
     } else if (Player2 == true) {
       PImage win = loadImage("Images/p2.jpg");
-      image(win, 500, 360);
+      image(win, MAP_WIDTH / 2, MAP_HEIGHT / 2);
     }
   }
 }
