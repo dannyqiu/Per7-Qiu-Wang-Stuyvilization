@@ -66,8 +66,33 @@ void movement(Sprite sprite) {
       ((Settler) Selected).CreateCapital();
       sprite.setDead(true);
     }
+   if (sprite.eventType == Sprite.CLICK){
+      History.appendText("Selected Unit Health " + Selected.getHealth());}
     if (sprite.eventType == Sprite.PRESS) {
     } else if (sprite.eventType == Sprite.RELEASE) {
+     if(Selected instanceof Berserker){    
+        Tile start = game.getNearestTile(mouseX, mouseY);
+        ArrayList<Tile> Test = start.getNeighbors();
+        for (Tile x : Test) {
+          if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
+            (!hex(start.getColor()).equals(hex(WATER_COLOR)))) {
+            sprite.setXY(start.getCenterX(), start.getCenterY());
+            Selected.move(start.getCenterX(), start.getCenterY());  
+        }
+        }
+        }
+        else if(Selected instanceof Pirate){    
+        Tile start = game.getNearestTile(mouseX, mouseY);
+        ArrayList<Tile> Test = start.getNeighbors();
+        for (Tile x : Test) {
+          if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
+            (!hex(start.getColor()).equals(hex(MOUNTAIN_COLOR)))) {
+            sprite.setXY(start.getCenterX(), start.getCenterY());
+            Selected.move(start.getCenterX(), start.getCenterY());  
+        }
+        }
+        } 
+       else{
       if (Selected._movement > 0) {
         Tile start = game.getNearestTile(mouseX, mouseY);
         ArrayList<Tile> Test = start.getNeighbors();
@@ -80,6 +105,7 @@ void movement(Sprite sprite) {
         }
       }
     }
+    }
   }
 }
 
@@ -90,6 +116,8 @@ public void EndTurnClick(GButton source, GEvent event) {
   for (Unit x : Units) {
     if (x != null) {
       x._movement = 2;
+    if (x instanceof Horse){
+      x._movement = 3;}
     }
   }
   Turn ++;
@@ -322,39 +350,39 @@ public void Unit6Click(GImageButton source, GEvent event) {
     if (CapitalX == -1 && CapitalY == -1) {
       History.appendText("No Capital");
     } else { 
-      Unit Knight = new Knight(40, 50);
-      if (Me.gold > Knight._cost) {
-        Sprite X = new Sprite(this, "Images/knight.png", UnitNumber); 
+      Unit Pirate = new Pirate(40, 50);
+      if (Me.gold > Pirate._cost) {
+        Sprite X = new Sprite(this, "Images/pirate.png", UnitNumber); 
         unitsSprites.add(X);
         UnitNumber ++;
         Tile start = game.getNearestTile(CapitalX, CapitalY);
         X.setXY(start.getCenterX(), start.getCenterY());
-        Units.add (Knight);
+        Units.add (Pirate);
         X.respondToMouse(true);
         X.addEventHandler(this, "movement");
-        Me.gold -= Knight._cost;
+        Me.gold -= Pirate._cost;
       } else {
-        History.appendText("Not enough gold to buy a Knight!");
+        History.appendText("Not enough gold to buy a Pirate!");
       }
     }
   } else {
     if (enemyCapitalX == -1 && enemyCapitalY == -1) {
       History.appendText("No Capital");
     } else {
-      Unit Knight = new Knight(40, 50);
-      if (Enemy.gold > Knight._cost) {
-        Sprite X = new Sprite(this, "Images/knight.png", UnitNumber);
+      Unit Pirate = new Pirate(40, 50);
+      if (Enemy.gold > Pirate._cost) {
+        Sprite X = new Sprite(this, "Images/pirate.png", UnitNumber);
         unitsSprites.add(X);
         UnitNumber ++;
         Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
         X.setXY(start.getCenterX(), start.getCenterY());
-        Knight.enemy = true;
-        Units.add (Knight);
+        Pirate.enemy = true;
+        Units.add (Pirate);
         X.respondToMouse(true);
         X.addEventHandler(this, "movement");
-        Enemy.gold -= Knight._cost;
+        Enemy.gold -= Pirate._cost;
       } else {
-        History.appendText("Not enough gold to buy a Knight!");
+        History.appendText("Not enough gold to buy a Pirate!");
       }
     }
   }
@@ -488,7 +516,7 @@ public void createGUI() {
   );
   Unit5.addEventHandler(this, "Unit5Click");
   Unit6 = new GImageButton(window1.papplet, 140, 440, 140, 140, new String[] { 
-    "Images/Longswordsman_(Civ5).png", "Images/Longswordsman_(Civ5).png", "Images/Longswordsman_(Civ5).png"
+    "Images/Galley_(Civ5).png", "Images/Galley_(Civ5).png", "Images/Galley_(Civ5).png"
   } 
   );
   Unit6.addEventHandler(this, "Unit6Click");
@@ -504,7 +532,7 @@ public void createGUI() {
   Unit8.addEventHandler(this, "Unit8Click");
   Stats = new GTextArea (window1.papplet, 80, 0, 200, 25, G4P.SCROLLBARS_NONE);
   Stats.setTextEditEnabled(false);
-  History = new GTextArea(window1.papplet, 80, 20, 200, 140, G4P.SCROLLBARS_NONE);
+  History = new GTextArea(window1.papplet, 80, 20, 200, 140, G4P.SCROLLBARS_VERTICAL_ONLY);
   History.setTextEditEnabled(false);
   History.setText ("Turn 1: \n Click to Settle, Drag to Move");
   History.addEventHandler(this, "Record");
