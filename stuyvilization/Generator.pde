@@ -88,7 +88,7 @@ class Generator {
     }
     breadthSearch(start, end);
     for (Tile p : path) {
-      p.setColor(#FFFFFF);
+      p.setColor(PATH_COLOR);
     }
   }
 

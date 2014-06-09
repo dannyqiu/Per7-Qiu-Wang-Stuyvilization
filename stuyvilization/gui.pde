@@ -13,7 +13,7 @@ GTextArea Stats;
 
 GImageButton Start; 
 int UnitNumber = 0;
-int Turn = 1;
+
 synchronized public void draw (GWinApplet appc, GWinData data) {
 } 
 
@@ -60,28 +60,24 @@ Tile gEnemyStartUnit(Map map) {
 
 void movement(Sprite sprite) {
   Unit Selected = Units.get(sprite.getZorder());
-  Tile Current = game.getNearestTile(Selected.x, Selected.y);
-  ArrayList<Tile> N = Current.getNeighbors();
-  if (sprite.eventType == Sprite.CLICK && Selected instanceof Settler) {
-    ((Settler) Selected).CreateCapital();
-    sprite.setDead(true);
-  }
-  if (sprite.eventType == Sprite.PRESS) {
-  } else if (sprite.eventType == Sprite.RELEASE) {
-    if (Selected._movement > 0) {
-      Tile start = game.getNearestTile(mouseX, mouseY);
-      ArrayList<Tile> Test = start.getNeighbors();
-      for (Tile x : Test) {
-        if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
-          (hex(start.getColor()).equals(hex(LAND_COLOR)) || hex(start.getColor()).equals(hex(MYTILE_COLOR)) || hex(start.getColor()).equals(hex(MYHOME_COLOR)))) {
-          sprite.setXY(start.getCenterX(), start.getCenterY());
-          if ( hex(start.getColor()).equals(hex(MYHOME_COLOR))) {
-          } else {
-            start.setColor(MYTILE_COLOR);
+  if ((!Selected.enemy && Turn % 2 == 1) || (Selected.enemy && Turn % 2 == 0)) {
+    Tile Current = game.getNearestTile(Selected.x, Selected.y);
+    //ArrayList<Tile> N = Current.getNeighbors();
+    if (sprite.eventType == Sprite.CLICK && Selected instanceof Settler) {
+      ((Settler) Selected).CreateCapital();
+      sprite.setDead(true);
+    }
+    if (sprite.eventType == Sprite.PRESS) {
+    } else if (sprite.eventType == Sprite.RELEASE) {
+      if (Selected._movement > 0) {
+        Tile start = game.getNearestTile(mouseX, mouseY);
+        ArrayList<Tile> Test = start.getNeighbors();
+        for (Tile x : Test) {
+          if ((x.getCenterX() == (int) sprite.getX() && x.getCenterY() == (int) sprite.getY()) && 
+            (!hex(start.getColor()).equals(hex(WATER_COLOR)) && !hex(start.getColor()).equals(hex(MOUNTAIN_COLOR)))) {
+            sprite.setXY(start.getCenterX(), start.getCenterY());
+            Selected.move(start.getCenterX(), start.getCenterY());
           }
-          Selected.x = start.getCenterX();
-          Selected.y = start.getCenterY();
-          Selected._movement --;
         }
       }
     }
@@ -95,167 +91,356 @@ public void EndTurnClick(GButton source, GEvent event) {
   for (Unit x : Units) {
     x._movement = 2;
   }
-  Turn += 1;
-  History.setText("Turn " + Turn);
-  Me.newTurn();
+  Turn ++;
+  if (Turn % 2 == 1) {
+    Me.newTurn();
+    History.setText("Turn " + Turn + ": Player 1");
+  } else {
+    Enemy.newTurn();
+    History.setText("Turn " + Turn + ": Player 2");
+  }
 } 
 
 public void Unit1Click(GImageButton source, GEvent event) {
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/thief.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Thief = new Thief(40, 50);
-    Units.add (Thief);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Thief._cost) {
-      Me.gold -= Thief._cost;
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
+    } else { 
+      Unit Thief = new Thief(40, 50);
+      if (Me.gold > Thief._cost) {
+        Sprite X = new Sprite(this, "Images/thief.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Thief);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Thief._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Thief!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Thief!");
+      Unit Thief = new Thief(40, 50);
+      if (Enemy.gold > Thief._cost) {
+        Sprite X = new Sprite(this, "Images/thief.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Thief.enemy = true;
+        Units.add (Thief);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Thief._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Thief!");
+      }
     }
   }
 }
 
 public void UnitClick2(GImageButton source, GEvent event) {
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/warrior.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Warrior = new Warrior(40, 50);
-    Units.add (Warrior);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Warrior._cost) {
-      Me.gold -= Warrior._cost;
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Warrior!");
+      Unit Warrior = new Warrior(40, 50);
+      if (Me.gold > Warrior._cost) {
+        Sprite X = new Sprite(this, "Images/warrior.png", UnitNumber); 
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Warrior);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Warrior._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Warrior!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
+    } else {
+      Unit Warrior = new Warrior(40, 50);
+      if (Enemy.gold > Warrior._cost) {
+        Sprite X = new Sprite(this, "Images/warrior.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Warrior.enemy = true;
+        Units.add (Warrior);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Warrior._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Warrior!");
+      }
     }
   }
 } 
 
-public void UnitClick3(GImageButton source, GEvent event) { 
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/archer.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Archer = new Archer(40, 50);
-    Units.add (Archer);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Archer._cost) {
-      Me.gold -= Archer._cost;
+public void UnitClick3(GImageButton source, GEvent event) {
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Archer!");
+      Unit Archer = new Archer(40, 50);
+      if (Me.gold > Archer._cost) {
+        Sprite X = new Sprite(this, "Images/archer.png", UnitNumber); 
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Archer);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Archer._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Archer!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
+    } else {
+      Unit Archer = new Archer(40, 50);
+      if (Enemy.gold > Archer._cost) {
+        Sprite X = new Sprite(this, "Images/archer.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Archer.enemy = true;
+        Units.add (Archer);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Archer._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Archer!");
+      }
     }
   }
 }
 
 public void UnitClick4(GImageButton source, GEvent event) { 
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/settler.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Settler = new Settler(40, 50);
-    Units.add (Settler);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Settler._cost) {
-      Me.gold -= Settler._cost;
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Settler!");
+      Unit Settler = new Settler(40, 50);
+      if (Me.gold > Settler._cost) {
+        Sprite X = new Sprite(this, "Images/settler.png", UnitNumber); 
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Settler);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Settler._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Settler!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
+    } else {
+      Unit Settler = new Settler(40, 50);
+      if (Enemy.gold > Settler._cost) {
+        Sprite X = new Sprite(this, "Images/settler.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Settler.enemy = true;
+        Units.add (Settler);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Settler._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Settler!");
+      }
     }
   }
 } 
 
 public void Unit5Click(GImageButton source, GEvent event) {
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/mage.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Mage = new Mage(40, 50);
-    Units.add (Mage);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Mage._cost) {
-      Me.gold -= Mage._cost;
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
+    } else { 
+      Unit Mage = new Mage(40, 50);
+      if (Me.gold > Mage._cost) {
+        Sprite X = new Sprite(this, "Images/mage.png", UnitNumber); 
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Mage);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Mage._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Mage!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Mage!");
+      Unit Mage = new Mage(40, 50);
+      if (Enemy.gold > Mage._cost) {
+        Sprite X = new Sprite(this, "Images/mage.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Mage.enemy = true;
+        Units.add (Mage);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Mage._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Mage!");
+      }
     }
   }
 } 
 
 public void Unit6Click(GImageButton source, GEvent event) {
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/knight.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Knight = new Knight(40, 50);
-    Units.add (Knight);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Knight._cost) {
-      Me.gold -= Knight._cost;
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
+    } else { 
+      Unit Knight = new Knight(40, 50);
+      if (Me.gold > Knight._cost) {
+        Sprite X = new Sprite(this, "Images/knight.png", UnitNumber); 
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Knight);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Knight._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Knight!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Knight!");
+      Unit Knight = new Knight(40, 50);
+      if (Enemy.gold > Knight._cost) {
+        Sprite X = new Sprite(this, "Images/knight.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Knight.enemy = true;
+        Units.add (Knight);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Knight._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Knight!");
+      }
     }
   }
 } 
 
 public void Unit7Click(GImageButton source, GEvent event) { 
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/horse.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Horse = new Horse(40, 50);
-    Units.add (Horse);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Horse._cost) {
-      Me.gold -= Horse._cost;
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
+    } else { 
+      Unit Horse = new Horse(40, 50);
+      if (Me.gold > Horse._cost) {
+        Sprite X = new Sprite(this, "Images/horse.png", UnitNumber); 
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Horse);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Horse._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Horseman!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Horseman!");
+      Unit Horse = new Horse(40, 50);
+      if (Enemy.gold > Horse._cost) {
+        Sprite X = new Sprite(this, "Images/horse.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Horse.enemy = true;
+        Units.add (Horse);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Horse._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Horseman!");
+      }
     }
   }
 } 
 
 public void Unit8Click(GImageButton source, GEvent event) { 
-  if (CapitalX == -1 && CapitalY == -1) {
-    History.appendText("No Capital");
-  } else { 
-    Sprite X = new Sprite(this, "Images/berserker.png", UnitNumber); 
-    UnitNumber ++;
-    Tile start = game.getNearestTile(CapitalX, CapitalY);
-    X.setXY(start.getCenterX(), start.getCenterY());
-    Unit Berserker = new Berserker(40, 50);
-    Units.add (Berserker);
-    X.respondToMouse(true);
-    X.addEventHandler(this, "movement");
-    if (Me.gold > Berserker._cost) {
-      Me.gold -= Berserker._cost;
+  if (Turn % 2 == 1) {
+    if (CapitalX == -1 && CapitalY == -1) {
+      History.appendText("No Capital");
+    } else { 
+      Unit Berserker = new Berserker(40, 50);
+      if (Me.gold > Berserker._cost) {
+        Sprite X = new Sprite(this, "Images/berserker.png", UnitNumber); 
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(CapitalX, CapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Units.add (Berserker);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Me.gold -= Berserker._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Berserker!");
+      }
+    }
+  } else {
+    if (enemyCapitalX == -1 && enemyCapitalY == -1) {
+      History.appendText("No Capital");
     } else {
-      History.appendText("Not enough gold to buy a Berserker!");
+      Unit Berserker = new Berserker(40, 50);
+      if (Enemy.gold > Berserker._cost) {
+        Sprite X = new Sprite(this, "Images/berserker.png", UnitNumber);
+        unitsSprites.add(X);
+        UnitNumber ++;
+        Tile start = game.getNearestTile(enemyCapitalX, enemyCapitalY);
+        X.setXY(start.getCenterX(), start.getCenterY());
+        Berserker.enemy = true;
+        Units.add (Berserker);
+        X.respondToMouse(true);
+        X.addEventHandler(this, "movement");
+        Enemy.gold -= Berserker._cost;
+      } else {
+        History.appendText("Not enough gold to buy a Berserker!");
+      }
     }
   }
 } 
