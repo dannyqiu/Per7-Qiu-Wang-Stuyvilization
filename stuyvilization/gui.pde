@@ -227,7 +227,7 @@ public void createGUI(){
   Unit2.addEventHandler(this, "UnitClick2");
   Unit3 = new GImageButton(window1.papplet, 0, 300, 140, 140, new String[] { "Images/Archer_(Civ5).png", "Images/Archer_(Civ5).png", "Images/Archer_(Civ5).png" } );
   Unit3.addEventHandler(this, "UnitClick3");
-  Unit4 = new GImageButton(window1.papplet, 140, 300, 140, 140, new String[] { "Images/monk.png", "Images/monk.png", "Images/monk.png" } );
+  Unit4 = new GImageButton(window1.papplet, 140, 300, 140, 140, new String[] { "Images/monk_.png", "Images/monk_.png", "Images/monk_.png" } );
   Unit4.addEventHandler(this, "UnitClick4");
   Unit5 = new GImageButton(window1.papplet, 0, 440, 140, 140, new String[] { "Images/Prophet_(Civ5).png", "Images/Prophet_(Civ5).png", "Images/Prophet_(Civ5).png" } );
   Unit5.addEventHandler(this, "Unit5Click");
