@@ -296,7 +296,7 @@ public void UnitClick4(GImageButton source, GEvent event) {
         X.addEventHandler(this, "movement");
         Enemy.gold -= Monk._cost;
       } else {
-        History.appendText("Not enough gold to buy a Settler!");
+        History.appendText("Not enough gold to buy a Monk!");
       }
     }
   }
